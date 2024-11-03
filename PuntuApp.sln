@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuntuApp", "PuntuApp.csproj", "{F128D1D7-EA5E-4B10-A2A3-AC725C55F724}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F128D1D7-EA5E-4B10-A2A3-AC725C55F724}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F128D1D7-EA5E-4B10-A2A3-AC725C55F724}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F128D1D7-EA5E-4B10-A2A3-AC725C55F724}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F128D1D7-EA5E-4B10-A2A3-AC725C55F724}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0560AAF1-CBC7-4AED-8E47-D99B093E7111}
+	EndGlobalSection
+EndGlobal
