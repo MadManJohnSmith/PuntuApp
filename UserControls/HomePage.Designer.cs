@@ -148,7 +148,7 @@
             // label5
             // 
             label5.Dock = DockStyle.Fill;
-            label5.Font = new Font("Yu Gothic", 15.75F, FontStyle.Bold);
+            label5.Font = new Font("PT Sans", 14.2499981F, FontStyle.Bold);
             label5.ForeColor = Color.FromArgb(19, 62, 135);
             label5.Location = new Point(3, 0);
             label5.Name = "label5";
@@ -159,7 +159,7 @@
             // label6
             // 
             label6.Dock = DockStyle.Fill;
-            label6.Font = new Font("Yu Gothic Light", 14.25F);
+            label6.Font = new Font("PT Sans", 9.749998F);
             label6.Location = new Point(3, 43);
             label6.Name = "label6";
             label6.Size = new Size(326, 30);
@@ -185,7 +185,7 @@
             // label7
             // 
             label7.Dock = DockStyle.Fill;
-            label7.Font = new Font("Yu Gothic", 15.75F, FontStyle.Bold);
+            label7.Font = new Font("PT Sans", 14.2499981F, FontStyle.Bold);
             label7.ForeColor = Color.FromArgb(19, 62, 135);
             label7.Location = new Point(3, 0);
             label7.Name = "label7";
@@ -196,7 +196,7 @@
             // label8
             // 
             label8.Dock = DockStyle.Fill;
-            label8.Font = new Font("Yu Gothic Light", 14.25F);
+            label8.Font = new Font("PT Sans", 9.749998F);
             label8.Location = new Point(3, 44);
             label8.Name = "label8";
             label8.Size = new Size(326, 30);
@@ -240,7 +240,7 @@
             // label9
             // 
             label9.Dock = DockStyle.Fill;
-            label9.Font = new Font("Yu Gothic", 15.75F, FontStyle.Bold);
+            label9.Font = new Font("PT Sans", 14.2499981F, FontStyle.Bold);
             label9.ForeColor = Color.FromArgb(19, 62, 135);
             label9.Location = new Point(3, 0);
             label9.Name = "label9";
@@ -251,7 +251,7 @@
             // label10
             // 
             label10.Dock = DockStyle.Fill;
-            label10.Font = new Font("Yu Gothic Light", 14.25F);
+            label10.Font = new Font("PT Sans", 9.749998F);
             label10.Location = new Point(3, 45);
             label10.Name = "label10";
             label10.Size = new Size(332, 31);
@@ -277,7 +277,7 @@
             // label13
             // 
             label13.Dock = DockStyle.Fill;
-            label13.Font = new Font("Yu Gothic", 15.75F, FontStyle.Bold);
+            label13.Font = new Font("PT Sans", 14.2499981F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label13.ForeColor = Color.FromArgb(19, 62, 135);
             label13.Location = new Point(3, 0);
             label13.Name = "label13";
@@ -288,7 +288,7 @@
             // label14
             // 
             label14.Dock = DockStyle.Fill;
-            label14.Font = new Font("Yu Gothic Light", 14.25F);
+            label14.Font = new Font("PT Sans", 9.749998F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label14.Location = new Point(3, 46);
             label14.Name = "label14";
             label14.Size = new Size(332, 31);
@@ -314,7 +314,7 @@
             // label11
             // 
             label11.Dock = DockStyle.Fill;
-            label11.Font = new Font("Yu Gothic", 15.75F, FontStyle.Bold);
+            label11.Font = new Font("PT Sans", 14.2499981F, FontStyle.Bold);
             label11.ForeColor = Color.FromArgb(19, 62, 135);
             label11.Location = new Point(3, 0);
             label11.Name = "label11";
@@ -325,12 +325,13 @@
             // label12
             // 
             label12.Dock = DockStyle.Fill;
-            label12.Font = new Font("Yu Gothic Light", 14.25F);
+            label12.Font = new Font("PT Sans", 9.749998F);
             label12.Location = new Point(3, 45);
             label12.Name = "label12";
             label12.Size = new Size(333, 31);
             label12.TabIndex = 1;
             label12.Text = "Hora Salida";
+            label12.Click += label12_Click;
             // 
             // tableLayoutPanel14
             // 
@@ -351,7 +352,7 @@
             // label15
             // 
             label15.Dock = DockStyle.Fill;
-            label15.Font = new Font("Yu Gothic Light", 14.25F);
+            label15.Font = new Font("PT Sans", 9.749998F);
             label15.Location = new Point(3, 46);
             label15.Name = "label15";
             label15.Size = new Size(333, 31);
@@ -361,7 +362,7 @@
             // label16
             // 
             label16.Dock = DockStyle.Fill;
-            label16.Font = new Font("Yu Gothic", 15.75F, FontStyle.Bold);
+            label16.Font = new Font("PT Sans", 14.2499981F, FontStyle.Bold);
             label16.ForeColor = Color.FromArgb(19, 62, 135);
             label16.Location = new Point(3, 0);
             label16.Name = "label16";
@@ -390,7 +391,7 @@
             button1.Dock = DockStyle.Fill;
             button1.FlatAppearance.BorderSize = 0;
             button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Book Antiqua", 12F);
+            button1.Font = new Font("PT Sans", 8.249999F);
             button1.Location = new Point(3, 3);
             button1.Name = "button1";
             button1.Size = new Size(252, 68);
@@ -404,7 +405,7 @@
             button2.Dock = DockStyle.Fill;
             button2.FlatAppearance.BorderSize = 0;
             button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Book Antiqua", 12F);
+            button2.Font = new Font("PT Sans", 8.249999F);
             button2.Location = new Point(261, 3);
             button2.Name = "button2";
             button2.Size = new Size(252, 68);

@@ -65,7 +65,7 @@
             // 
             // Logo
             // 
-            Logo.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            Logo.Font = new Font("Bauhaus 93", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Logo.ForeColor = Color.FromArgb(19, 62, 135);
             Logo.Location = new Point(3, 0);
             Logo.Name = "Logo";
@@ -96,7 +96,7 @@
             btnUsuario.Dock = DockStyle.Fill;
             btnUsuario.FlatAppearance.BorderSize = 0;
             btnUsuario.FlatStyle = FlatStyle.Flat;
-            btnUsuario.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            btnUsuario.Font = new Font("PT Sans", 11.9999981F, FontStyle.Bold);
             btnUsuario.ForeColor = Color.FromArgb(19, 62, 135);
             btnUsuario.Location = new Point(3, 103);
             btnUsuario.Name = "btnUsuario";
@@ -112,7 +112,7 @@
             btnHome.Dock = DockStyle.Fill;
             btnHome.FlatAppearance.BorderSize = 0;
             btnHome.FlatStyle = FlatStyle.Flat;
-            btnHome.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            btnHome.Font = new Font("PT Sans", 11.9999981F, FontStyle.Bold);
             btnHome.ForeColor = Color.FromArgb(19, 62, 135);
             btnHome.Location = new Point(3, 3);
             btnHome.Name = "btnHome";
@@ -128,7 +128,7 @@
             btnEmpleados.Dock = DockStyle.Fill;
             btnEmpleados.FlatAppearance.BorderSize = 0;
             btnEmpleados.FlatStyle = FlatStyle.Flat;
-            btnEmpleados.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            btnEmpleados.Font = new Font("PT Sans", 11.9999981F, FontStyle.Bold);
             btnEmpleados.ForeColor = Color.FromArgb(19, 62, 135);
             btnEmpleados.Location = new Point(3, 53);
             btnEmpleados.Name = "btnEmpleados";
@@ -170,7 +170,7 @@
             // 
             // label4
             // 
-            label4.Font = new Font("Segoe UI", 10F);
+            label4.Font = new Font("PT Sans", 11.9999981F, FontStyle.Bold);
             label4.ForeColor = Color.FromArgb(19, 62, 135);
             label4.Location = new Point(3, 0);
             label4.Name = "label4";
@@ -179,10 +179,11 @@
             label4.TabIndex = 2;
             label4.Text = "Estado: Activo";
             label4.TextAlign = ContentAlignment.MiddleRight;
+            label4.Click += label4_Click;
             // 
             // label1
             // 
-            label1.Font = new Font("Segoe UI", 10F);
+            label1.Font = new Font("PT Sans", 11.9999981F, FontStyle.Bold);
             label1.ForeColor = Color.FromArgb(19, 62, 135);
             label1.Location = new Point(313, 0);
             label1.Margin = new Padding(0);

@@ -34,7 +34,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(27, 25, 37);
+            BackColor = Color.FromArgb(243, 243, 224);
             Name = "EmployeesPage";
             Size = new Size(695, 482);
             ResumeLayout(false);

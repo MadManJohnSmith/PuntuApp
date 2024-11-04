@@ -26,7 +26,7 @@ namespace PuntuApp
             InitializeComponent();
             InitializeNavigationButtons();
             InitializeNavigationControl();
-            
+
         }
         private void InitializeNavigationControl()
         {
@@ -66,6 +66,11 @@ namespace PuntuApp
                 navigationControl.Display(2);
                 navigationButtons.Highlight(btnUsuario);
             }
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
