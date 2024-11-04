@@ -56,7 +56,7 @@
             // 
             label1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             label1.Font = new Font("Bauhaus 93", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.FromArgb(27, 25, 37);
+            label1.ForeColor = Color.FromArgb(19, 62, 135);
             label1.Location = new Point(73, 87);
             label1.Name = "label1";
             label1.Size = new Size(146, 44);
@@ -82,7 +82,7 @@
             // 
             // btnLogin
             // 
-            btnLogin.BackColor = Color.FromArgb(27, 25, 37);
+            btnLogin.BackColor = Color.FromArgb(19, 62, 135);
             btnLogin.Dock = DockStyle.Fill;
             btnLogin.FlatStyle = FlatStyle.Flat;
             btnLogin.Font = new Font("Bahnschrift", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -101,7 +101,7 @@
             btnClear.FlatAppearance.BorderSize = 0;
             btnClear.FlatStyle = FlatStyle.Flat;
             btnClear.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            btnClear.ForeColor = Color.FromArgb(27, 25, 37);
+            btnClear.ForeColor = Color.FromArgb(19, 62, 135);
             btnClear.Location = new Point(52, 0);
             btnClear.Margin = new Padding(0);
             btnClear.Name = "btnClear";
@@ -126,6 +126,7 @@
             // 
             label2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             label2.Font = new Font("Bahnschrift", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.ForeColor = Color.FromArgb(19, 62, 135);
             label2.Location = new Point(73, 131);
             label2.Name = "label2";
             label2.Size = new Size(146, 44);
@@ -193,7 +194,7 @@
             // 
             // panel1
             // 
-            panel1.BackColor = Color.FromArgb(27, 25, 37);
+            panel1.BackColor = Color.FromArgb(19, 62, 135);
             panel1.Location = new Point(3, 34);
             panel1.Name = "panel1";
             panel1.Size = new Size(140, 1);
@@ -225,7 +226,7 @@
             // 
             // panel2
             // 
-            panel2.BackColor = Color.FromArgb(27, 25, 37);
+            panel2.BackColor = Color.FromArgb(19, 62, 135);
             panel2.Location = new Point(3, 34);
             panel2.Name = "panel2";
             panel2.Size = new Size(140, 1);
@@ -246,6 +247,7 @@
             btnExit.Dock = DockStyle.Bottom;
             btnExit.FlatStyle = FlatStyle.Flat;
             btnExit.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnExit.ForeColor = Color.FromArgb(19, 62, 135);
             btnExit.Location = new Point(73, 379);
             btnExit.Name = "btnExit";
             btnExit.Size = new Size(146, 23);
@@ -259,7 +261,7 @@
             AcceptButton = btnLogin;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(238, 238, 238);
+            BackColor = Color.FromArgb(243, 243, 224);
             ClientSize = new Size(292, 447);
             Controls.Add(tableLayoutPanel1);
             FormBorderStyle = FormBorderStyle.None;

@@ -26,7 +26,7 @@ namespace PuntuApp
         private void btnLogin_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Home home = new Home();
+            MainPage home = new MainPage();
             home.Show();
         }
 
