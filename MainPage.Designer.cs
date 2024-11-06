@@ -179,7 +179,6 @@
             label4.TabIndex = 2;
             label4.Text = "Estado: Activo";
             label4.TextAlign = ContentAlignment.MiddleRight;
-            label4.Click += label4_Click;
             // 
             // label1
             // 

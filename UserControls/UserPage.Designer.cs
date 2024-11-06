@@ -53,6 +53,7 @@
             tableLayoutPanel11 = new TableLayoutPanel();
             label6 = new Label();
             textBox5 = new TextBox();
+            button2 = new Button();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -127,6 +128,7 @@
             tableLayoutPanel3.Controls.Add(tableLayoutPanel4, 0, 0);
             tableLayoutPanel3.Controls.Add(tableLayoutPanel5, 0, 1);
             tableLayoutPanel3.Controls.Add(tableLayoutPanel6, 0, 2);
+            tableLayoutPanel3.Controls.Add(button2, 0, 3);
             tableLayoutPanel3.Dock = DockStyle.Fill;
             tableLayoutPanel3.Location = new Point(3, 147);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -184,9 +186,10 @@
             // 
             // textBox1
             // 
+            textBox1.Dock = DockStyle.Fill;
             textBox1.Location = new Point(3, 45);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(100, 23);
+            textBox1.Size = new Size(244, 23);
             textBox1.TabIndex = 1;
             // 
             // tableLayoutPanel8
@@ -218,9 +221,10 @@
             // 
             // textBox2
             // 
+            textBox2.Dock = DockStyle.Fill;
             textBox2.Location = new Point(3, 45);
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(100, 23);
+            textBox2.Size = new Size(201, 23);
             textBox2.TabIndex = 1;
             // 
             // tableLayoutPanel9
@@ -252,9 +256,10 @@
             // 
             // textBox3
             // 
+            textBox3.Dock = DockStyle.Fill;
             textBox3.Location = new Point(3, 45);
             textBox3.Name = "textBox3";
-            textBox3.Size = new Size(100, 23);
+            textBox3.Size = new Size(202, 23);
             textBox3.TabIndex = 1;
             // 
             // tableLayoutPanel5
@@ -282,15 +287,16 @@
             label4.Size = new Size(250, 77);
             label4.TabIndex = 0;
             label4.Text = "Nombre de Usuario:";
-            label4.TextAlign = ContentAlignment.MiddleRight;
+            label4.TextAlign = ContentAlignment.TopRight;
             // 
             // textBox6
             // 
-            textBox6.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            textBox6.Dock = DockStyle.Top;
             textBox6.Location = new Point(259, 3);
             textBox6.Name = "textBox6";
-            textBox6.Size = new Size(100, 23);
+            textBox6.Size = new Size(421, 23);
             textBox6.TabIndex = 1;
+            textBox6.TextChanged += textBox6_TextChanged;
             // 
             // tableLayoutPanel6
             // 
@@ -331,14 +337,15 @@
             label5.Name = "label5";
             label5.Size = new Size(329, 42);
             label5.TabIndex = 0;
-            label5.Text = "label5";
+            label5.Text = "Nueva Contraseña:";
             label5.TextAlign = ContentAlignment.BottomLeft;
             // 
             // textBox4
             // 
+            textBox4.Dock = DockStyle.Fill;
             textBox4.Location = new Point(3, 45);
             textBox4.Name = "textBox4";
-            textBox4.Size = new Size(100, 23);
+            textBox4.Size = new Size(329, 23);
             textBox4.TabIndex = 1;
             // 
             // tableLayoutPanel11
@@ -365,15 +372,26 @@
             label6.Name = "label6";
             label6.Size = new Size(330, 42);
             label6.TabIndex = 0;
-            label6.Text = "label6";
+            label6.Text = "Repetir Contraseña:";
             label6.TextAlign = ContentAlignment.BottomLeft;
             // 
             // textBox5
             // 
+            textBox5.Dock = DockStyle.Fill;
             textBox5.Location = new Point(3, 45);
             textBox5.Name = "textBox5";
-            textBox5.Size = new Size(100, 23);
+            textBox5.Size = new Size(330, 23);
             textBox5.TabIndex = 1;
+            // 
+            // button2
+            // 
+            button2.Dock = DockStyle.Bottom;
+            button2.Location = new Point(3, 306);
+            button2.Name = "button2";
+            button2.Size = new Size(683, 23);
+            button2.TabIndex = 3;
+            button2.Text = "Guardar Cambios";
+            button2.UseVisualStyleBackColor = true;
             // 
             // UserPage
             // 
@@ -431,5 +449,6 @@
         private TextBox textBox4;
         private Label label6;
         private TextBox textBox5;
+        private Button button2;
     }
 }

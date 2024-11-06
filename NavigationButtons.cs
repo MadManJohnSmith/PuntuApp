@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Calculadora_Areas_Perimetros
 {
-    internal class NavigationButtons
+    public class NavigationButtons
     {
         List<Button> buttons;
         Color defaultColor;

@@ -67,10 +67,5 @@ namespace PuntuApp
                 navigationButtons.Highlight(btnUsuario);
             }
         }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
