@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Calculadora_Areas_Perimetros;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,87 +13,62 @@ namespace PuntuApp.UserControls
 {
     partial class EmployeesPage : UserControl
     {
-        NavigationButtons navButtons;
+        NavigationControl navigationControl;
         Color btnDefaultColor = Color.Transparent;
         Color btnSelectedtColor = Color.FromArgb(203, 220, 235);
         public EmployeesPage()
         {
             InitializeComponent();
-            InitializeNavigationButtons();
+            InitializeNavigationControl();
         }
-        private void InitializeNavigationButtons()
+        private void InitializeNavigationControl()
         {
-            List<Button> buttons = new List<Button>()
-            { btnID, btnNombre, btnEstado, btnEntrada, btnSalida};
-            navButtons = new NavigationButtons(buttons, btnDefaultColor, btnSelectedtColor);
-        }
+            List<UserControl> userControls = new List<UserControl>()
+            { new addUserPage()};
 
-        private void btnID_Click(object sender, EventArgs e)
-        {
-            navButtons.Highlight(btnID);
+            navigationControl = new NavigationControl(userControls, panel1);
         }
-
-        private void btnNombre_Click(object sender, EventArgs e)
+        private void btnSalida_Click(object sender, EventArgs e)
         {
-            navButtons.Highlight(btnNombre);
-        }
-
-        private void btnEstado_Click(object sender, EventArgs e)
-        {
-            navButtons.Highlight(btnEstado);
+            HighlightButton((Button)sender);
         }
 
         private void btnEntrada_Click(object sender, EventArgs e)
         {
-            navButtons.Highlight(btnEntrada);
+            HighlightButton((Button)sender);
         }
 
-        private void btnSalida_Click(object sender, EventArgs e)
+        private void btnEstado_Click(object sender, EventArgs e)
         {
-            navButtons.Highlight(btnSalida);
+            HighlightButton((Button)sender);
         }
 
-        internal class NavigationButtons
+        private void btnNombre_Click(object sender, EventArgs e)
         {
-            private List<Button> buttons;
-            private Color defaultColor;
-            private Color selectedColor;
-
-            public NavigationButtons(List<Button> buttons, Color defaultColor, Color selectedColor)
-            {
-                this.buttons = buttons;
-                this.defaultColor = defaultColor;
-                this.selectedColor = selectedColor;
-                SetButtonColor();
-            }
-
-            private void SetButtonColor()
-            {
-                foreach (Button button in buttons)
-                {
-                    button.BackColor = defaultColor;
-                }
-            }
-
-            public void Highlight(Button selectedButton)
-            {
-                foreach (Button button in buttons)
-                {
-                    if (button == selectedButton)
-                    {
-                        selectedButton.BackColor = selectedColor;
-                    }
-                    else
-                    {
-                        button.BackColor = defaultColor;
-                    }
-                }
-            }
+            HighlightButton((Button)sender);
         }
 
+        private void btnID_Click(object sender, EventArgs e)
+        {
+            HighlightButton((Button)sender);
+        }
 
+        private void HighlightButton(Button clickedButton)
+        {
+            // Reset all buttons to default color
+            btnSalida.BackColor = btnDefaultColor;
+            btnEntrada.BackColor = btnDefaultColor;
+            btnEstado.BackColor = btnDefaultColor;
+            btnNombre.BackColor = btnDefaultColor;
+            btnID.BackColor = btnDefaultColor;
 
+            // Set the clicked button to the selected color
+            clickedButton.BackColor = btnSelectedtColor;
+        }
+
+        private void btnAddUser_Click(object sender, EventArgs e)
+        {
+            navigationControl.Display(0);
+        }
     }
 }
-
-

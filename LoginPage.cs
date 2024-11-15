@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,14 +23,25 @@ namespace PuntuApp
             txtUsername.Clear();
             txtPassword.Clear();
         }
-
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            MainPage home = new MainPage();
-            home.Show();
-        }
+            string connectionString = "server=localhost;database=puntuapp;uid=" + txtUsername.Text + ";pwd=" + txtPassword.Text + ";";
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
 
+                    this.Hide();
+                    MainPage home = new MainPage();
+                    home.Show();
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show("Connection failed: " + ex.Message);
+                }
+            }
+        }
         private void btnExit_Click(object sender, EventArgs e)
         {
             Application.Exit();

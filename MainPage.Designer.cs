@@ -208,12 +208,14 @@
             BackColor = Color.FromArgb(243, 243, 224);
             ClientSize = new Size(904, 561);
             Controls.Add(tableLayoutPanel1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximumSize = new Size(920, 600);
             MinimumSize = new Size(920, 600);
             Name = "MainPage";
             Opacity = 0.99D;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "PuntuApp";
+            Load += MainPage_Load;
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel3.ResumeLayout(false);

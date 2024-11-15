@@ -15,6 +15,8 @@ namespace PuntuApp
 {
     public partial class MainPage : Form
     {
+        private bool isClosing = false;
+
         NavigationControl navigationControl;
         NavigationButtons navigationButtons;
 
@@ -31,7 +33,7 @@ namespace PuntuApp
         private void InitializeNavigationControl()
         {
             List<UserControl> userControls = new List<UserControl>()
-            { new HomePage(), new EmployeesPage(), new UserPage()};
+            { new HomePage(), new EmployeesPage(), new UserPage(), new addUserPage()};
 
             navigationControl = new NavigationControl(userControls, panel1);
             navigationControl.Display(0);
@@ -65,6 +67,35 @@ namespace PuntuApp
             {
                 navigationControl.Display(2);
                 navigationButtons.Highlight(btnUsuario);
+            }
+        }
+
+        private void MainPage_Load(object sender, EventArgs e)
+        {
+
+        }
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+
+            if (e.CloseReason == CloseReason.WindowsShutDown) return;
+
+            if (isClosing) return; // Evitar múltiples ejecuciones
+
+            isClosing = true; // Marcar como en proceso de cierre
+
+            // Confirmar si el usuario quiere cerrar
+            switch (MessageBox.Show(this, "Are you sure you want to close?", "Closing", MessageBoxButtons.YesNo))
+            {
+                case DialogResult.Yes:
+                    Application.Exit();
+                    break;
+                case DialogResult.No:
+                    e.Cancel = true;
+                    isClosing = false; // Restablecer el estado si se cancela el cierre
+                    break;
+                default:
+                    break;
             }
         }
     }

@@ -32,13 +32,13 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             tableLayoutPanel2 = new TableLayoutPanel();
             tableLayoutPanel4 = new TableLayoutPanel();
-            textBox1 = new TextBox();
+            searchBar = new TextBox();
             tableLayoutPanel6 = new TableLayoutPanel();
-            comboBox1 = new ComboBox();
+            FilterSelection = new ComboBox();
             label1 = new Label();
-            textBox2 = new TextBox();
+            txtFilter = new TextBox();
             tableLayoutPanel3 = new TableLayoutPanel();
-            button1 = new Button();
+            btnAddUser = new Button();
             tableLayoutPanel5 = new TableLayoutPanel();
             label2 = new Label();
             btnID = new Button();
@@ -107,7 +107,7 @@
             tableLayoutPanel4.ColumnCount = 2;
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 200F));
-            tableLayoutPanel4.Controls.Add(textBox1, 1, 0);
+            tableLayoutPanel4.Controls.Add(searchBar, 1, 0);
             tableLayoutPanel4.Controls.Add(tableLayoutPanel6, 0, 0);
             tableLayoutPanel4.Dock = DockStyle.Fill;
             tableLayoutPanel4.Location = new Point(3, 50);
@@ -117,17 +117,17 @@
             tableLayoutPanel4.Size = new Size(683, 41);
             tableLayoutPanel4.TabIndex = 1;
             // 
-            // textBox1
+            // searchBar
             // 
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Dock = DockStyle.Fill;
-            textBox1.Font = new Font("Segoe UI", 12F);
-            textBox1.Location = new Point(486, 3);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "Buscar: ";
-            textBox1.Size = new Size(194, 35);
-            textBox1.TabIndex = 0;
+            searchBar.BorderStyle = BorderStyle.None;
+            searchBar.Dock = DockStyle.Fill;
+            searchBar.Font = new Font("Segoe UI", 12F);
+            searchBar.Location = new Point(486, 3);
+            searchBar.Multiline = true;
+            searchBar.Name = "searchBar";
+            searchBar.PlaceholderText = "Buscar: ";
+            searchBar.Size = new Size(194, 35);
+            searchBar.TabIndex = 0;
             // 
             // tableLayoutPanel6
             // 
@@ -135,9 +135,9 @@
             tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 60F));
             tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 150F));
             tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel6.Controls.Add(comboBox1, 1, 0);
+            tableLayoutPanel6.Controls.Add(FilterSelection, 1, 0);
             tableLayoutPanel6.Controls.Add(label1);
-            tableLayoutPanel6.Controls.Add(textBox2, 2, 0);
+            tableLayoutPanel6.Controls.Add(txtFilter, 2, 0);
             tableLayoutPanel6.Dock = DockStyle.Fill;
             tableLayoutPanel6.Location = new Point(3, 3);
             tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -146,17 +146,17 @@
             tableLayoutPanel6.Size = new Size(477, 35);
             tableLayoutPanel6.TabIndex = 1;
             // 
-            // comboBox1
+            // FilterSelection
             // 
-            comboBox1.Dock = DockStyle.Fill;
-            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Nombre", "Nombre de Usuario", "Estado" });
-            comboBox1.Location = new Point(60, 0);
-            comboBox1.Margin = new Padding(0);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(150, 23);
-            comboBox1.TabIndex = 0;
+            FilterSelection.Dock = DockStyle.Fill;
+            FilterSelection.DropDownStyle = ComboBoxStyle.DropDownList;
+            FilterSelection.FormattingEnabled = true;
+            FilterSelection.Items.AddRange(new object[] { "Nombre", "Nombre de Usuario", "Estado" });
+            FilterSelection.Location = new Point(60, 0);
+            FilterSelection.Margin = new Padding(0);
+            FilterSelection.Name = "FilterSelection";
+            FilterSelection.Size = new Size(150, 23);
+            FilterSelection.TabIndex = 0;
             // 
             // label1
             // 
@@ -169,22 +169,22 @@
             label1.TabIndex = 0;
             label1.Text = "Filtrar Por:";
             // 
-            // textBox2
+            // txtFilter
             // 
-            textBox2.Dock = DockStyle.Left;
-            textBox2.Location = new Point(210, 0);
-            textBox2.Margin = new Padding(0);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(150, 23);
-            textBox2.TabIndex = 1;
-            textBox2.Text = "...";
+            txtFilter.Dock = DockStyle.Left;
+            txtFilter.Location = new Point(210, 0);
+            txtFilter.Margin = new Padding(0);
+            txtFilter.Name = "txtFilter";
+            txtFilter.Size = new Size(150, 23);
+            txtFilter.TabIndex = 1;
+            txtFilter.Text = "...";
             // 
             // tableLayoutPanel3
             // 
             tableLayoutPanel3.ColumnCount = 2;
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 200F));
-            tableLayoutPanel3.Controls.Add(button1, 1, 0);
+            tableLayoutPanel3.Controls.Add(btnAddUser, 1, 0);
             tableLayoutPanel3.Controls.Add(tableLayoutPanel5, 0, 0);
             tableLayoutPanel3.Dock = DockStyle.Fill;
             tableLayoutPanel3.Location = new Point(3, 3);
@@ -194,16 +194,17 @@
             tableLayoutPanel3.Size = new Size(683, 41);
             tableLayoutPanel3.TabIndex = 0;
             // 
-            // button1
+            // btnAddUser
             // 
-            button1.Dock = DockStyle.Fill;
-            button1.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            button1.Location = new Point(486, 3);
-            button1.Name = "button1";
-            button1.Size = new Size(194, 35);
-            button1.TabIndex = 0;
-            button1.Text = "+Anadir Usuario";
-            button1.UseVisualStyleBackColor = true;
+            btnAddUser.Dock = DockStyle.Fill;
+            btnAddUser.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            btnAddUser.Location = new Point(486, 3);
+            btnAddUser.Name = "btnAddUser";
+            btnAddUser.Size = new Size(194, 35);
+            btnAddUser.TabIndex = 0;
+            btnAddUser.Text = "+Anadir Usuario";
+            btnAddUser.UseVisualStyleBackColor = true;
+            btnAddUser.Click += btnAddUser_Click;
             // 
             // tableLayoutPanel5
             // 
@@ -250,6 +251,7 @@
             btnID.TabIndex = 1;
             btnID.Text = "ID";
             btnID.UseVisualStyleBackColor = true;
+            btnID.Click += btnID_Click;
             // 
             // btnNombre
             // 
@@ -262,6 +264,7 @@
             btnNombre.TabIndex = 2;
             btnNombre.Text = "Nombre";
             btnNombre.UseVisualStyleBackColor = true;
+            btnNombre.Click += btnNombre_Click;
             // 
             // btnEstado
             // 
@@ -274,6 +277,7 @@
             btnEstado.TabIndex = 3;
             btnEstado.Text = "Estado";
             btnEstado.UseVisualStyleBackColor = true;
+            btnEstado.Click += btnEstado_Click;
             // 
             // btnEntrada
             // 
@@ -286,6 +290,7 @@
             btnEntrada.TabIndex = 4;
             btnEntrada.Text = "Hora de Entrada";
             btnEntrada.UseVisualStyleBackColor = true;
+            btnEntrada.Click += btnEntrada_Click;
             // 
             // btnSalida
             // 
@@ -298,6 +303,7 @@
             btnSalida.TabIndex = 5;
             btnSalida.Text = "Hora de Salida";
             btnSalida.UseVisualStyleBackColor = true;
+            btnSalida.Click += btnSalida_Click;
             // 
             // dataGridView1
             // 
@@ -398,13 +404,13 @@
         private DataGridViewTextBoxColumn lastEntry;
         private DataGridViewTextBoxColumn lastExit;
         private TableLayoutPanel tableLayoutPanel4;
-        private TextBox textBox1;
-        private Button button1;
+        private TextBox searchBar;
+        private Button btnAddUser;
         private TableLayoutPanel tableLayoutPanel6;
         private Label label1;
         private TableLayoutPanel tableLayoutPanel5;
-        private ComboBox comboBox1;
-        private TextBox textBox2;
+        private ComboBox FilterSelection;
+        private TextBox txtFilter;
         private Label label2;
         private Button btnID;
         private Button btnNombre;
