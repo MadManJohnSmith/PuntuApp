@@ -32,13 +32,25 @@ namespace PuntuApp
         }
         private void InitializeNavigationControl()
         {
-            List<UserControl> userControls = new List<UserControl>()
-            { new HomePage(), new EmployeesPage(), new UserPage(), new addUserPage()};
+            // Create NavigationControl
+            navigationControl = new NavigationControl(new List<UserControl>(), panel1);
 
-            navigationControl = new NavigationControl(userControls, panel1);
+            // Create UserControls with the initialized NavigationControl
+            List<UserControl> userControls = new List<UserControl>()
+            {
+                new HomePage(),//0
+                new EmployeesPage(navigationControl),//1
+                new UserPage(),//2
+                new addUserPage(navigationControl)//3
+            };
+
+            // Set the user controls to the navigation control
+            navigationControl.SetUserControls(userControls); // Método nuevo para actualizar la lista
+
             navigationControl.Display(0);
             navigationButtons.Highlight(btnHome);
         }
+
         private void InitializeNavigationButtons()
         {
             List<Button> buttons = new List<Button>()
@@ -69,7 +81,6 @@ namespace PuntuApp
                 navigationButtons.Highlight(btnUsuario);
             }
         }
-
         private void MainPage_Load(object sender, EventArgs e)
         {
 

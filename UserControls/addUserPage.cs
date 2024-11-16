@@ -12,11 +12,12 @@ namespace PuntuApp.UserControls
 {
     public partial class addUserPage : UserControl
     {
-        public addUserPage()
+        private NavigationControl navigationControl;
+        public addUserPage(NavigationControl navigationControl)
         {
             InitializeComponent();
+            this.navigationControl = navigationControl;
         }
-
         private void btnPhoto_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -41,6 +42,11 @@ namespace PuntuApp.UserControls
         private void btnAddUser_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            navigationControl.Display(1);
         }
     }
 }

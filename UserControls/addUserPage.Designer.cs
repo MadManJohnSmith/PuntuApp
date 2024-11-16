@@ -53,6 +53,7 @@
             pbPhoto = new PictureBox();
             btnPhoto = new Button();
             tableLayoutPanel2 = new TableLayoutPanel();
+            btnCancelar = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
             tableLayoutPanel11.SuspendLayout();
             tableLayoutPanel10.SuspendLayout();
@@ -366,9 +367,11 @@
             // tableLayoutPanel2
             // 
             tableLayoutPanel2.AllowDrop = true;
-            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnCount = 3;
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 138F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 200F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel2.Controls.Add(btnCancelar, 2, 0);
             tableLayoutPanel2.Controls.Add(pbPhoto, 0, 0);
             tableLayoutPanel2.Controls.Add(btnPhoto, 1, 0);
             tableLayoutPanel2.Dock = DockStyle.Fill;
@@ -378,6 +381,19 @@
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel2.Size = new Size(689, 138);
             tableLayoutPanel2.TabIndex = 0;
+            // 
+            // btnCancelar
+            // 
+            btnCancelar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnCancelar.BackColor = Color.FromArgb(255, 41, 41);
+            btnCancelar.FlatStyle = FlatStyle.Flat;
+            btnCancelar.Location = new Point(563, 94);
+            btnCancelar.Name = "btnCancelar";
+            btnCancelar.Size = new Size(123, 41);
+            btnCancelar.TabIndex = 2;
+            btnCancelar.Text = "Cancelar";
+            btnCancelar.UseVisualStyleBackColor = false;
+            btnCancelar.Click += btnCancelar_Click;
             // 
             // tableLayoutPanel1
             // 
@@ -451,5 +467,6 @@
         private Button btnPhoto;
         private TableLayoutPanel tableLayoutPanel2;
         private TableLayoutPanel tableLayoutPanel1;
+        private Button btnCancelar;
     }
 }

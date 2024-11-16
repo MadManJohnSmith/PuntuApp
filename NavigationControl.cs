@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PuntuApp
 {
-    internal class NavigationControl
+    public class NavigationControl
     {
         private List<UserControl> userControlList = new List<UserControl>();
         private Panel panel;
@@ -28,24 +28,27 @@ namespace PuntuApp
                 userControl.Visible = false; // Asegura que estén ocultos inicialmente
             }
         }
-
+        public void SetUserControls(List<UserControl> userControls)
+        {
+            this.userControlList = userControls;
+            AddUserControls();
+        }
         public void Display(int index)
         {
-            // Asegúrate de que el índice sea válido
             if (index < 0 || index >= userControlList.Count)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), "Índice fuera de rango.");
+                MessageBox.Show($"Índice fuera de rango: {index}. Total de controles: {userControlList.Count}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
-            // Oculta todos los UserControls
             foreach (var userControl in userControlList)
             {
-                userControl.Visible = false; // Oculta todos
+                userControl.Visible = false;
             }
 
-            // Muestra solo el UserControl seleccionado
             userControlList[index].Visible = true;
-            userControlList[index].BringToFront(); // Lleva al frente el UserControl visible
+            userControlList[index].BringToFront();
         }
+
     }
 }

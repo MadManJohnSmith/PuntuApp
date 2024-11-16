@@ -13,20 +13,13 @@ namespace PuntuApp.UserControls
 {
     partial class EmployeesPage : UserControl
     {
-        NavigationControl navigationControl;
         Color btnDefaultColor = Color.Transparent;
         Color btnSelectedtColor = Color.FromArgb(203, 220, 235);
-        public EmployeesPage()
+        private NavigationControl navigationControl;
+        public EmployeesPage(NavigationControl navigationControl)
         {
             InitializeComponent();
-            InitializeNavigationControl();
-        }
-        private void InitializeNavigationControl()
-        {
-            List<UserControl> userControls = new List<UserControl>()
-            { new addUserPage()};
-
-            navigationControl = new NavigationControl(userControls, panel1);
+            this.navigationControl = navigationControl;
         }
         private void btnSalida_Click(object sender, EventArgs e)
         {
@@ -68,7 +61,7 @@ namespace PuntuApp.UserControls
 
         private void btnAddUser_Click(object sender, EventArgs e)
         {
-            navigationControl.Display(0);
+            navigationControl.Display(3);
         }
     }
 }
