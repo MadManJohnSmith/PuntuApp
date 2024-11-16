@@ -33,7 +33,7 @@ namespace PuntuApp
                     connection.Open();
 
                     this.Hide();
-                    MainPage home = new MainPage();
+                    MainPage home = new MainPage(connectionString);
                     home.Show();
                 }
                 catch (MySqlException ex)

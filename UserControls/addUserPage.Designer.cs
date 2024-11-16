@@ -39,6 +39,8 @@
             label4 = new Label();
             txtUsername = new TextBox();
             tableLayoutPanel5 = new TableLayoutPanel();
+            cbUserType = new ComboBox();
+            label7 = new Label();
             label3 = new Label();
             label2 = new Label();
             tableLayoutPanel9 = new TableLayoutPanel();
@@ -172,7 +174,7 @@
             label4.Font = new Font("PT Sans", 11.9999981F, FontStyle.Bold);
             label4.Location = new Point(3, 0);
             label4.Name = "label4";
-            label4.Size = new Size(250, 77);
+            label4.Size = new Size(250, 38);
             label4.TabIndex = 0;
             label4.Text = "Nombre de Usuario:";
             label4.TextAlign = ContentAlignment.TopRight;
@@ -188,17 +190,45 @@
             // tableLayoutPanel5
             // 
             tableLayoutPanel5.ColumnCount = 2;
-            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5030746F));
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.50307F));
             tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 62.496933F));
+            tableLayoutPanel5.Controls.Add(cbUserType, 1, 1);
+            tableLayoutPanel5.Controls.Add(label7, 0, 1);
             tableLayoutPanel5.Controls.Add(label4, 0, 0);
             tableLayoutPanel5.Controls.Add(txtUsername, 1, 0);
             tableLayoutPanel5.Dock = DockStyle.Fill;
             tableLayoutPanel5.Location = new Point(3, 86);
             tableLayoutPanel5.Name = "tableLayoutPanel5";
-            tableLayoutPanel5.RowCount = 1;
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel5.RowCount = 2;
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel5.Size = new Size(683, 77);
             tableLayoutPanel5.TabIndex = 1;
+            // 
+            // cbUserType
+            // 
+            cbUserType.Dock = DockStyle.Fill;
+            cbUserType.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbUserType.FormattingEnabled = true;
+            cbUserType.Items.AddRange(new object[] { "Estándar", "Administrador" });
+            cbUserType.Location = new Point(256, 38);
+            cbUserType.Margin = new Padding(0);
+            cbUserType.Name = "cbUserType";
+            cbUserType.Size = new Size(427, 23);
+            cbUserType.TabIndex = 3;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Dock = DockStyle.Fill;
+            label7.Font = new Font("PT Sans", 11.9999981F, FontStyle.Bold);
+            label7.Location = new Point(3, 38);
+            label7.Name = "label7";
+            label7.Size = new Size(250, 39);
+            label7.TabIndex = 2;
+            label7.Text = "Tipo de Usuario";
+            label7.TextAlign = ContentAlignment.TopRight;
             // 
             // label3
             // 
@@ -352,6 +382,7 @@
             pbPhoto.Size = new Size(132, 132);
             pbPhoto.TabIndex = 0;
             pbPhoto.TabStop = false;
+            pbPhoto.Click += pbPhoto_Click;
             // 
             // btnPhoto
             // 
@@ -468,5 +499,7 @@
         private TableLayoutPanel tableLayoutPanel2;
         private TableLayoutPanel tableLayoutPanel1;
         private Button btnCancelar;
+        private Label label7;
+        private ComboBox cbUserType;
     }
 }

@@ -157,6 +157,7 @@
             FilterSelection.Name = "FilterSelection";
             FilterSelection.Size = new Size(150, 23);
             FilterSelection.TabIndex = 0;
+            FilterSelection.SelectedIndexChanged += FilterSelection_SelectedIndexChanged;
             // 
             // label1
             // 

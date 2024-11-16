@@ -63,5 +63,10 @@ namespace PuntuApp.UserControls
         {
             navigationControl.Display(3);
         }
+
+        private void FilterSelection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
