@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Security.Cryptography;
 using System.Text;
+using PuntuApp.Helpers;
 
 namespace PuntuApp.UserControls
 {
@@ -71,70 +72,48 @@ namespace PuntuApp.UserControls
                 return;
             }
 
+            // Datos del usuario
             string fullName = $"{txtName.Text} {txtPaterno.Text} {txtMaterno.Text}";
             string username = txtUsername.Text;
-            string roleName = cbUserType.SelectedItem?.ToString();
             string password = txtPassword.Text;
+            string roleName = cbUserType.SelectedItem?.ToString();
             byte[] photo = GetPhotoBytes(); // Obtener la foto como byte[]
 
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            try
             {
-                try
+                // Crear una instancia de DatabaseHelper
+                DatabaseHelper dbHelper = new DatabaseHelper(connectionString);
+
+                // Agregar usuario
+                long userId = dbHelper.AddUser(fullName, username, password, photo);
+                if (userId == -1)
                 {
-                    connection.Open();
-                    MySqlTransaction transaction = connection.BeginTransaction(); // Iniciar transacción
-
-                    // Insertar usuario
-                    string userQuery = @"
-                INSERT INTO Usuarios (nombre, username, hashedPassword, foto) 
-                VALUES (@nombre, @username, @hashedPassword, @foto)";
-                    long userId;
-                    using (MySqlCommand userCmd = new MySqlCommand(userQuery, connection, transaction))
-                    {
-                        userCmd.Parameters.AddWithValue("@nombre", fullName);
-                        userCmd.Parameters.AddWithValue("@username", username);
-                        userCmd.Parameters.AddWithValue("@hashedPassword", password);
-                        userCmd.Parameters.AddWithValue("@foto", photo);
-
-                        userCmd.ExecuteNonQuery();
-                        userId = userCmd.LastInsertedId; // Obtener el ID del usuario creado
-                    }
-
-                    // Obtener ID del rol
-                    string roleQuery = "SELECT idRol FROM Roles WHERE nombreRol = @roleName";
-                    long roleId;
-                    using (MySqlCommand roleCmd = new MySqlCommand(roleQuery, connection, transaction))
-                    {
-                        roleCmd.Parameters.AddWithValue("@roleName", roleName);
-                        object result = roleCmd.ExecuteScalar();
-                        if (result == null)
-                        {
-                            MessageBox.Show("El rol seleccionado no existe.");
-                            transaction.Rollback();
-                            return;
-                        }
-                        roleId = Convert.ToInt64(result);
-                    }
-
-                    // Asignar usuario al rol
-                    string userRoleQuery = @"
-                INSERT INTO Usuarios_Roles (idUsuario, idRol) 
-                VALUES (@idUsuario, @idRol)";
-                    using (MySqlCommand userRoleCmd = new MySqlCommand(userRoleQuery, connection, transaction))
-                    {
-                        userRoleCmd.Parameters.AddWithValue("@idUsuario", userId);
-                        userRoleCmd.Parameters.AddWithValue("@idRol", roleId);
-
-                        userRoleCmd.ExecuteNonQuery();
-                    }
-
-                    transaction.Commit();
-                    MessageBox.Show("Usuario agregado correctamente.");
+                    MessageBox.Show("Error al agregar el usuario.");
+                    return;
                 }
-                catch (MySqlException ex)
+
+                // Obtener ID del rol
+                long roleId = dbHelper.GetRoleId(roleName);
+                if (roleId == -1)
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    MessageBox.Show("El rol seleccionado no existe.");
+                    return;
                 }
+
+                // Asignar el rol al usuario
+                bool roleAssigned = dbHelper.AssignRoleToUser(userId, roleId);
+                if (!roleAssigned)
+                {
+                    MessageBox.Show("Error al asignar el rol al usuario.");
+                    return;
+                }
+
+                MessageBox.Show("Usuario agregado correctamente.");
+                btnCancelar_Click(sender, e); // Limpiar el formulario y regresar a la página anterior
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
             }
         }
         private byte[] GetPhotoBytes()
