@@ -201,5 +201,41 @@ namespace PuntuApp.Helpers
                 }
             }
         }
+        public DataTable GetUsersWithAttendance()
+        {
+            string query = @"
+        SELECT 
+            Usuarios.idUsuario AS ID,
+            Usuarios.nombre AS name,
+            Usuarios.username AS Username,
+            MAX(Registros.horaEntrada) AS lastEntry,
+            MAX(Registros.horaSalida) AS lastExit
+        FROM Usuarios
+        LEFT JOIN Registros ON Usuarios.idUsuario = Registros.idUsuario
+        GROUP BY Usuarios.idUsuario, Usuarios.nombre, Usuarios.username
+        ORDER BY Usuarios.idUsuario";
+
+            DataTable dataTable = new DataTable();
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                    {
+                        using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                        {
+                            adapter.Fill(dataTable);
+                        }
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show("Error al obtener datos de empleados: " + ex.Message);
+                }
+            }
+            return dataTable;
+        }
     }
 }

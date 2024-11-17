@@ -47,12 +47,6 @@
             btnEntrada = new Button();
             btnSalida = new Button();
             dataGridView1 = new DataGridView();
-            ID = new DataGridViewTextBoxColumn();
-            name = new DataGridViewTextBoxColumn();
-            Username = new DataGridViewTextBoxColumn();
-            state = new DataGridViewTextBoxColumn();
-            lastEntry = new DataGridViewTextBoxColumn();
-            lastExit = new DataGridViewTextBoxColumn();
             panel1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
@@ -307,66 +301,20 @@
             // 
             // dataGridView1
             // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AllowUserToOrderColumns = true;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleVertical;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ID, name, Username, state, lastEntry, lastExit });
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.Location = new Point(3, 103);
             dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowTemplate.DefaultCellStyle.Font = new Font("Microsoft YaHei", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridView1.RowTemplate.DefaultCellStyle.ForeColor = Color.Black;
             dataGridView1.ScrollBars = ScrollBars.Vertical;
             dataGridView1.Size = new Size(689, 376);
             dataGridView1.TabIndex = 1;
-            // 
-            // ID
-            // 
-            ID.FillWeight = 30F;
-            ID.HeaderText = "ID";
-            ID.MinimumWidth = 30;
-            ID.Name = "ID";
-            ID.ReadOnly = true;
-            ID.Resizable = DataGridViewTriState.False;
-            // 
-            // name
-            // 
-            name.FillWeight = 89.54315F;
-            name.HeaderText = "Nombre";
-            name.MinimumWidth = 160;
-            name.Name = "name";
-            name.ReadOnly = true;
-            // 
-            // Username
-            // 
-            Username.FillWeight = 89.54315F;
-            Username.HeaderText = "Nombre de Usuario";
-            Username.MinimumWidth = 121;
-            Username.Name = "Username";
-            Username.ReadOnly = true;
-            // 
-            // state
-            // 
-            state.FillWeight = 89.54315F;
-            state.HeaderText = "Estado";
-            state.MinimumWidth = 80;
-            state.Name = "state";
-            state.ReadOnly = true;
-            // 
-            // lastEntry
-            // 
-            lastEntry.FillWeight = 89.54315F;
-            lastEntry.HeaderText = "Ultima Entrada";
-            lastEntry.MinimumWidth = 130;
-            lastEntry.Name = "lastEntry";
-            lastEntry.ReadOnly = true;
-            // 
-            // lastExit
-            // 
-            lastExit.FillWeight = 89.54315F;
-            lastExit.HeaderText = "Ultima Salida";
-            lastExit.MinimumWidth = 130;
-            lastExit.Name = "lastExit";
-            lastExit.ReadOnly = true;
             // 
             // EmployeesPage
             // 
@@ -397,12 +345,6 @@
         private TableLayoutPanel tableLayoutPanel2;
         private DataGridView dataGridView1;
         private TableLayoutPanel tableLayoutPanel3;
-        private DataGridViewTextBoxColumn ID;
-        private DataGridViewTextBoxColumn name;
-        private DataGridViewTextBoxColumn Username;
-        private DataGridViewTextBoxColumn state;
-        private DataGridViewTextBoxColumn lastEntry;
-        private DataGridViewTextBoxColumn lastExit;
         private TableLayoutPanel tableLayoutPanel4;
         private TextBox searchBar;
         private Button btnAddUser;
