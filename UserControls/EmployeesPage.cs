@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PuntuApp.Helpers;
 
 namespace PuntuApp.UserControls
 {
@@ -16,10 +17,17 @@ namespace PuntuApp.UserControls
         Color btnDefaultColor = Color.Transparent;
         Color btnSelectedtColor = Color.FromArgb(203, 220, 235);
         private NavigationControl navigationControl;
-        public EmployeesPage(NavigationControl navigationControl)
+        private DatabaseHelper databaseHelper;
+        public EmployeesPage(NavigationControl navigationControl, string connectionString)
         {
             InitializeComponent();
             this.navigationControl = navigationControl;
+            this.databaseHelper = new DatabaseHelper(connectionString);
+            LoadEmployees();
+        }
+        private void LoadEmployees()
+        {
+
         }
         private void btnSalida_Click(object sender, EventArgs e)
         {
@@ -48,25 +56,17 @@ namespace PuntuApp.UserControls
 
         private void HighlightButton(Button clickedButton)
         {
-            // Reset all buttons to default color
             btnSalida.BackColor = btnDefaultColor;
             btnEntrada.BackColor = btnDefaultColor;
             btnEstado.BackColor = btnDefaultColor;
             btnNombre.BackColor = btnDefaultColor;
             btnID.BackColor = btnDefaultColor;
-
-            // Set the clicked button to the selected color
             clickedButton.BackColor = btnSelectedtColor;
         }
 
         private void btnAddUser_Click(object sender, EventArgs e)
         {
             navigationControl.Display(3);
-        }
-
-        private void FilterSelection_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

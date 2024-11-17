@@ -1,14 +1,9 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace PuntuApp.UserControls
 {
@@ -16,12 +11,14 @@ namespace PuntuApp.UserControls
     {
         private NavigationControl navigationControl;
         private string connectionString;
+
         public addUserPage(NavigationControl navigationControl, string connectionString)
         {
             InitializeComponent();
             this.navigationControl = navigationControl;
             this.connectionString = connectionString;
         }
+
         private void btnPhoto_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -34,63 +31,8 @@ namespace PuntuApp.UserControls
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string filePath = openFileDialog.FileName;
-
                     pbPhoto.BackgroundImage = Image.FromFile(filePath);
-                    pbPhoto.BackgroundImageLayout = ImageLayout.Zoom; // Adjust layout as needed
-                }
-            }
-        }
-        private void btnAddUser_Click(object sender, EventArgs e)
-        {
-            //Validaciones
-            if (txtPassword.Text != txtPassVeri.Text)
-            {
-                MessageBox.Show("Passwords do not match.");
-                return;
-            }
-
-            string fullName = $"{txtName.Text} {txtPaterno.Text} {txtMaterno.Text}";
-            string username = txtUsername.Text;
-            string userType = cbUserType.SelectedItem.ToString();
-            string password = txtPassword.Text;
-
-
-            string hashedPassword = password;
-
-            // Convert photo to byte array
-            byte[] photo = null;
-            if (pbPhoto.BackgroundImage != null)
-            {
-                using (var ms = new System.IO.MemoryStream())
-                {
-                    pbPhoto.BackgroundImage.Save(ms, pbPhoto.BackgroundImage.RawFormat);
-                    photo = ms.ToArray();
-                }
-            }
-
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-
-                    string query = "INSERT INTO Usuarios (nombre, username, email, hashedPassword, rol, foto) VALUES (@nombre, @username, @username, @hashedPassword, @rol, @foto)";
-                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
-                    {
-                        cmd.Parameters.AddWithValue("@nombre", fullName);
-                        cmd.Parameters.AddWithValue("@username", username);
-                        cmd.Parameters.AddWithValue("@hashedPassword", hashedPassword);
-                        cmd.Parameters.AddWithValue("@rol", userType);
-                        cmd.Parameters.AddWithValue("@foto", photo);
-
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    MessageBox.Show("User added successfully.");
-                }
-                catch (MySqlException ex)
-                {
-                    MessageBox.Show("Error: " + ex.Message);
+                    pbPhoto.BackgroundImageLayout = ImageLayout.Zoom;
                 }
             }
         }
@@ -109,9 +51,101 @@ namespace PuntuApp.UserControls
 
             navigationControl.Display(1);
         }
-        private void pbPhoto_Click(object sender, EventArgs e)
+        private void btnAddUser_Click(object sender, EventArgs e)
         {
+            // Validaciones
+            if (string.IsNullOrWhiteSpace(txtName.Text) ||
+                string.IsNullOrWhiteSpace(txtPaterno.Text) ||
+                string.IsNullOrWhiteSpace(txtMaterno.Text) ||
+                string.IsNullOrWhiteSpace(txtUsername.Text) ||
+                string.IsNullOrWhiteSpace(txtPassword.Text) ||
+                string.IsNullOrWhiteSpace(txtPassVeri.Text))
+            {
+                MessageBox.Show("Todos los campos son obligatorios.");
+                return;
+            }
 
+            if (txtPassword.Text != txtPassVeri.Text)
+            {
+                MessageBox.Show("Las contraseñas no coinciden.");
+                return;
+            }
+
+            string fullName = $"{txtName.Text} {txtPaterno.Text} {txtMaterno.Text}";
+            string username = txtUsername.Text;
+            string roleName = cbUserType.SelectedItem?.ToString();
+            string password = txtPassword.Text;
+            byte[] photo = GetPhotoBytes(); // Obtener la foto como byte[]
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    MySqlTransaction transaction = connection.BeginTransaction(); // Iniciar transacción
+
+                    // Insertar usuario
+                    string userQuery = @"
+                INSERT INTO Usuarios (nombre, username, hashedPassword, foto) 
+                VALUES (@nombre, @username, @hashedPassword, @foto)";
+                    long userId;
+                    using (MySqlCommand userCmd = new MySqlCommand(userQuery, connection, transaction))
+                    {
+                        userCmd.Parameters.AddWithValue("@nombre", fullName);
+                        userCmd.Parameters.AddWithValue("@username", username);
+                        userCmd.Parameters.AddWithValue("@hashedPassword", password);
+                        userCmd.Parameters.AddWithValue("@foto", photo);
+
+                        userCmd.ExecuteNonQuery();
+                        userId = userCmd.LastInsertedId; // Obtener el ID del usuario creado
+                    }
+
+                    // Obtener ID del rol
+                    string roleQuery = "SELECT idRol FROM Roles WHERE nombreRol = @roleName";
+                    long roleId;
+                    using (MySqlCommand roleCmd = new MySqlCommand(roleQuery, connection, transaction))
+                    {
+                        roleCmd.Parameters.AddWithValue("@roleName", roleName);
+                        object result = roleCmd.ExecuteScalar();
+                        if (result == null)
+                        {
+                            MessageBox.Show("El rol seleccionado no existe.");
+                            transaction.Rollback();
+                            return;
+                        }
+                        roleId = Convert.ToInt64(result);
+                    }
+
+                    // Asignar usuario al rol
+                    string userRoleQuery = @"
+                INSERT INTO Usuarios_Roles (idUsuario, idRol) 
+                VALUES (@idUsuario, @idRol)";
+                    using (MySqlCommand userRoleCmd = new MySqlCommand(userRoleQuery, connection, transaction))
+                    {
+                        userRoleCmd.Parameters.AddWithValue("@idUsuario", userId);
+                        userRoleCmd.Parameters.AddWithValue("@idRol", roleId);
+
+                        userRoleCmd.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+                    MessageBox.Show("Usuario agregado correctamente.");
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            }
+        }
+        private byte[] GetPhotoBytes()
+        {
+            if (pbPhoto.BackgroundImage == null) return null;
+
+            using (var ms = new System.IO.MemoryStream())
+            {
+                pbPhoto.BackgroundImage.Save(ms, pbPhoto.BackgroundImage.RawFormat);
+                return ms.ToArray();
+            }
         }
     }
 }

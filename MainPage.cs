@@ -40,13 +40,13 @@ namespace PuntuApp
             List<UserControl> userControls = new List<UserControl>()
             {
                 new HomePage(),//0
-                new EmployeesPage(navigationControl),//1
+                new EmployeesPage(navigationControl, connectionString),//1
                 new UserPage(),//2
                 new addUserPage(navigationControl, connectionString)//3
             };
 
-            // Set the user controls to the navigation control
-            navigationControl.SetUserControls(userControls); // Método nuevo para actualizar la lista
+
+            navigationControl.SetUserControls(userControls);
 
             navigationControl.Display(0);
             navigationButtons.Highlight(btnHome);
@@ -92,19 +92,18 @@ namespace PuntuApp
 
             if (e.CloseReason == CloseReason.WindowsShutDown) return;
 
-            if (isClosing) return; // Evitar múltiples ejecuciones
+            if (isClosing) return;
 
-            isClosing = true; // Marcar como en proceso de cierre
+            isClosing = true;
 
-            // Confirmar si el usuario quiere cerrar
-            switch (MessageBox.Show(this, "Are you sure you want to close?", "Closing", MessageBoxButtons.YesNo))
+            switch (MessageBox.Show(this, "¿Seguro que quieres salir?", "Cerrando...", MessageBoxButtons.YesNo))
             {
                 case DialogResult.Yes:
                     Application.Exit();
                     break;
                 case DialogResult.No:
                     e.Cancel = true;
-                    isClosing = false; // Restablecer el estado si se cancela el cierre
+                    isClosing = false;
                     break;
                 default:
                     break;

@@ -211,7 +211,7 @@
             cbUserType.Dock = DockStyle.Fill;
             cbUserType.DropDownStyle = ComboBoxStyle.DropDownList;
             cbUserType.FormattingEnabled = true;
-            cbUserType.Items.AddRange(new object[] { "Estándar", "Administrador" });
+            cbUserType.Items.AddRange(new object[] { "Empleado", "Administrador" });
             cbUserType.Location = new Point(256, 38);
             cbUserType.Margin = new Padding(0);
             cbUserType.Name = "cbUserType";
@@ -382,7 +382,6 @@
             pbPhoto.Size = new Size(132, 132);
             pbPhoto.TabIndex = 0;
             pbPhoto.TabStop = false;
-            pbPhoto.Click += pbPhoto_Click;
             // 
             // btnPhoto
             // 
