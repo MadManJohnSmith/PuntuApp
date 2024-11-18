@@ -24,7 +24,37 @@ namespace PuntuApp.UserControls
             this.navigationControl = navigationControl;
             this.databaseHelper = new DatabaseHelper(connectionString);
             LoadEmployees();
+            HighlightButton(btnID);
+            btnID.Click += (s, e) => OrdenarColumna("ID");
+            btnNombre.Click += (s, e) => OrdenarColumna("name");
+            btnEstado.Click += (s, e) => OrdenarColumna("Username");
+            btnEntrada.Click += (s, e) => OrdenarColumna("lastEntry");
+            btnSalida.Click += (s, e) => OrdenarColumna("lastExit");
             //AddTestRowsToDataGridView();
+        }
+        private void OrdenarColumna(string columnName)
+        {
+            try
+            {
+                // Verificar si la columna existe en el DataGridView
+                if (dataGridView1.Columns[columnName] != null)
+                {
+                    // Alternar entre Ascendente y Descendente si ya está ordenada
+                    var sortDirection = dataGridView1.SortOrder == SortOrder.Ascending ?
+                        System.ComponentModel.ListSortDirection.Descending :
+                        System.ComponentModel.ListSortDirection.Ascending;
+
+                    dataGridView1.Sort(dataGridView1.Columns[columnName], sortDirection);
+                }
+                else
+                {
+                    MessageBox.Show($"La columna '{columnName}' no existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ocurrió un error al ordenar la columna '{columnName}': {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void btnSalida_Click(object sender, EventArgs e)
         {
