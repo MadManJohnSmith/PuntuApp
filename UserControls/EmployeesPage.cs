@@ -33,6 +33,8 @@ namespace PuntuApp.UserControls
             btnSalida.Click += (s, e) => OrdenarColumna("lastExit");
             searchBar.TextChanged += searchBar_TextChanged;
             //AddTestRowsToDataGridView();
+            FilterSelection.SelectedIndexChanged += FilterSelection_SelectedIndexChanged;
+            txtFilter.TextChanged += txtFilter_TextChanged;
         }
         private void OrdenarColumna(string columnName)
         {
@@ -206,6 +208,52 @@ namespace PuntuApp.UserControls
                 DataView dv = new DataView(employeesData);
                 dv.RowFilter = filterExpression;
                 dataGridView1.DataSource = dv;
+            }
+        }
+        private void txtFilter_TextChanged(object sender, EventArgs e)
+        {
+            ApplyFilter();
+        }
+
+        private void FilterSelection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ApplyFilter();
+        }
+
+        private void ApplyFilter()
+        {
+            if (employeesData != null)
+            {
+                string selectedField = "";
+                string filterText = txtFilter.Text.Replace("'", "''"); // Escape single quotes
+
+                switch (FilterSelection.SelectedItem?.ToString())
+                {
+                    case "Nombre":
+                        selectedField = "name";
+                        break;
+                    case "Nombre de Usuario":
+                        selectedField = "Username";
+                        break;
+                    case "Estado":
+                        selectedField = "Estado";
+                        break;
+                    default:
+                        dataGridView1.DataSource = employeesData;
+                        return;
+                }
+
+                if (!string.IsNullOrEmpty(filterText))
+                {
+                    string filterExpression = string.Format("{0} LIKE '%{1}%'", selectedField, filterText);
+                    DataView dv = new DataView(employeesData);
+                    dv.RowFilter = filterExpression;
+                    dataGridView1.DataSource = dv;
+                }
+                else
+                {
+                    dataGridView1.DataSource = employeesData;
+                }
             }
         }
     }

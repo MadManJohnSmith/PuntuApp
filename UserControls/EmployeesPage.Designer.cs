@@ -152,6 +152,7 @@
             FilterSelection.Name = "FilterSelection";
             FilterSelection.Size = new Size(150, 23);
             FilterSelection.TabIndex = 0;
+            FilterSelection.SelectedIndexChanged += FilterSelection_SelectedIndexChanged;
             // 
             // label1
             // 
@@ -170,9 +171,10 @@
             txtFilter.Location = new Point(210, 0);
             txtFilter.Margin = new Padding(0);
             txtFilter.Name = "txtFilter";
+            txtFilter.PlaceholderText = "Ingresa texto...";
             txtFilter.Size = new Size(150, 23);
             txtFilter.TabIndex = 1;
-            txtFilter.Text = "...";
+            txtFilter.TextChanged += txtFilter_TextChanged;
             // 
             // tableLayoutPanel3
             // 
