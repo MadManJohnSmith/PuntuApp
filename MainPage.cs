@@ -24,10 +24,12 @@ namespace PuntuApp
         Color btnSelectedtColor = Color.FromArgb(203, 220, 235);
 
         private string connectionString;
-        public MainPage(string connectionString)
+        private int loggedInUserId;
+        public MainPage(string connectionString, int loggedInUserId)
         {
             InitializeComponent();
             this.connectionString = connectionString;
+            this.loggedInUserId = loggedInUserId;
             InitializeNavigationButtons();
             InitializeNavigationControl();
 
@@ -43,7 +45,7 @@ namespace PuntuApp
                 new EmployeesPage(navigationControl, connectionString),//1
                 new UserPage(),//2
                 new addUserPage(navigationControl, connectionString),//3
-                new editUserPage(navigationControl, connectionString)//4
+                new editUserPage(navigationControl, connectionString, loggedInUserId)//4
             };
 
 

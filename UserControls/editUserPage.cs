@@ -18,12 +18,14 @@ namespace PuntuApp.UserControls
         private DatabaseHelper dbHelper;
         private int userId;
         private bool isEditing = false;
-        public editUserPage(NavigationControl navigationControl, string connectionString)
+        private int loggedInUserId;
+        public editUserPage(NavigationControl navigationControl, string connectionString, int loggedInUserId)
         {
             InitializeComponent();
             this.navigationControl = navigationControl;
             this.connectionString = connectionString;
             this.dbHelper = new DatabaseHelper(connectionString);
+            this.loggedInUserId = loggedInUserId;
             cbUserType.SelectedIndex = 0;
         }
         public void SetUserData(int userId)
@@ -84,8 +86,14 @@ namespace PuntuApp.UserControls
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            if (isEditing && userId > 0)
+            if (isEditing && userId >= 0)
             {
+                if (userId == loggedInUserId)
+                {
+                    MessageBox.Show("No se puede eliminar el usuario que está actualmente conectado.");
+                    return;
+                }
+
                 var result = MessageBox.Show("¿Está seguro de que desea eliminar este usuario?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.Yes)
                 {

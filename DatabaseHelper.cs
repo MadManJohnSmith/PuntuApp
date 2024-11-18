@@ -16,11 +16,47 @@ namespace PuntuApp.Helpers
             builder.Server = "localhost";
             this.connectionString = builder.ToString();
         }
+
+        public int AuthenticateUser(string username, string password)
+        {
+            string userConnectionString = $"server=localhost;database=puntuapp;uid={username};pwd={password};";
+            using (MySqlConnection connection = new MySqlConnection(userConnectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = "SELECT idUsuario FROM Usuarios WHERE username = @username";
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@username", username);
+                        object result = cmd.ExecuteScalar();
+                        if (result != null)
+                        {
+                            return Convert.ToInt32(result);
+                        }
+                        else if (username == "root")
+                        {
+                            return 0; // Asumiendo 0 para el usuario root
+                        }
+                        else
+                        {
+                            return -1; // Usuario no encontrado
+                        }
+                    }
+                }
+                catch (MySqlException)
+                {
+                    // Autenticación fallida
+                    return -1;
+                }
+            }
+        }
+
         public long AddUser(string fullName, string username, string hashedPassword, byte[] photo)
         {
             string query = @"
-                INSERT INTO Usuarios (nombre, username, hashedPassword, foto) 
-                VALUES (@nombre, @username, @hashedPassword, @foto)";
+                INSERT INTO Usuarios (nombre, username, password, foto) 
+                VALUES (@nombre, @username, @password, @foto)";
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -31,7 +67,7 @@ namespace PuntuApp.Helpers
                     {
                         cmd.Parameters.AddWithValue("@nombre", fullName);
                         cmd.Parameters.AddWithValue("@username", username);
-                        cmd.Parameters.AddWithValue("@hashedPassword", hashedPassword);
+                        cmd.Parameters.AddWithValue("@password", hashedPassword);
                         cmd.Parameters.AddWithValue("@foto", photo);
 
                         cmd.ExecuteNonQuery();
@@ -45,7 +81,7 @@ namespace PuntuApp.Helpers
                 }
             }
         }
-        //Verifica si un rol existe en la base de datos
+
         public long GetRoleId(string roleName)
         {
             string query = "SELECT idRol FROM Roles WHERE nombreRol = @roleName";
@@ -78,7 +114,7 @@ namespace PuntuApp.Helpers
                 }
             }
         }
-        //Asigna un rol a un usuario en la tabla Usuarios_Roles
+
         public bool AssignRoleToUser(long userId, long roleId)
         {
             string query = @"
@@ -106,6 +142,7 @@ namespace PuntuApp.Helpers
                 }
             }
         }
+
         public bool CreateMySQLUser(string username, string password, string role)
         {
             try
@@ -152,6 +189,7 @@ namespace PuntuApp.Helpers
                 return false;
             }
         }
+
         public DataTable GetUsers()
         {
             DataTable dataTable = new DataTable();
@@ -221,7 +259,7 @@ namespace PuntuApp.Helpers
                 connection.Open();
                 string query = @"SELECT Roles.nombreRol FROM Roles
                             INNER JOIN Usuarios_Roles ON Roles.idRol = Usuarios_Roles.idRol
-                            WHERE usuarios_roles.idUsuario = @UserId";
+                            WHERE Usuarios_Roles.idUsuario = @UserId";
                 using (var command = new MySqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@UserId", userId);
@@ -230,23 +268,24 @@ namespace PuntuApp.Helpers
                 }
             }
         }
+
         public bool UpdateUser(long userId, string fullName, string username, string password, byte[] photo)
         {
             using (var connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
 
-                // Build the query dynamically based on provided parameters
-                StringBuilder queryBuilder = new StringBuilder("UPDATE Usuarios SET name = @FullName, username = @Username");
+                // Construir la consulta dinámicamente según los parámetros proporcionados
+                StringBuilder queryBuilder = new StringBuilder("UPDATE Usuarios SET nombre = @FullName, username = @Username");
                 if (!string.IsNullOrEmpty(password))
                 {
                     queryBuilder.Append(", password = @Password");
                 }
                 if (photo != null)
                 {
-                    queryBuilder.Append(", photo = @Photo");
+                    queryBuilder.Append(", foto = @Photo");
                 }
-                queryBuilder.Append(" WHERE ID = @UserId");
+                queryBuilder.Append(" WHERE idUsuario = @UserId");
 
                 using (var command = new MySqlCommand(queryBuilder.ToString(), connection))
                 {
@@ -254,7 +293,7 @@ namespace PuntuApp.Helpers
                     command.Parameters.AddWithValue("@Username", username);
                     if (!string.IsNullOrEmpty(password))
                     {
-                        command.Parameters.AddWithValue("@Password", password); // Remember to hash the password
+                        command.Parameters.AddWithValue("@Password", password); // Recuerde cifrar la contraseña
                     }
                     if (photo != null)
                     {
@@ -267,22 +306,23 @@ namespace PuntuApp.Helpers
                 }
             }
         }
+
         public bool UpdateUserRole(long userId, long roleId)
         {
             using (var connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
 
-                // Delete existing roles for the user
-                string deleteQuery = "DELETE FROM Usuarios_Roles WHERE usuario_id = @UserId";
+                // Eliminar roles existentes para el usuario
+                string deleteQuery = "DELETE FROM Usuarios_Roles WHERE idUsuario = @UserId";
                 using (var deleteCommand = new MySqlCommand(deleteQuery, connection))
                 {
                     deleteCommand.Parameters.AddWithValue("@UserId", userId);
                     deleteCommand.ExecuteNonQuery();
                 }
 
-                // Assign the new role
-                string insertQuery = "INSERT INTO Usuarios_Roles (usuario_id, rol_id) VALUES (@UserId, @RoleId)";
+                // Asignar el nuevo rol
+                string insertQuery = "INSERT INTO Usuarios_Roles (idUsuario, idRol) VALUES (@UserId, @RoleId)";
                 using (var insertCommand = new MySqlCommand(insertQuery, connection))
                 {
                     insertCommand.Parameters.AddWithValue("@UserId", userId);
@@ -292,9 +332,17 @@ namespace PuntuApp.Helpers
                 }
             }
         }
-        //Elimina un usuario de la base de datos
+
         public bool DeleteUser(long userId)
         {
+            // Primero, obtenemos el nombre de usuario del usuario que se va a eliminar
+            string username = GetUsernameById(userId);
+            if (string.IsNullOrEmpty(username))
+            {
+                MessageBox.Show("No se pudo encontrar el nombre de usuario.");
+                return false;
+            }
+
             string query = "DELETE FROM Usuarios WHERE idUsuario = @userId";
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -307,7 +355,21 @@ namespace PuntuApp.Helpers
                         cmd.Parameters.AddWithValue("@userId", userId);
 
                         int result = cmd.ExecuteNonQuery();
-                        return result > 0;
+
+                        if (result > 0)
+                        {
+                            // Eliminamos el usuario MySQL
+                            bool mysqlUserDeleted = DeleteMySQLUser(username);
+                            if (!mysqlUserDeleted)
+                            {
+                                MessageBox.Show("El usuario fue eliminado de la base de datos, pero no se pudo eliminar el usuario MySQL.");
+                            }
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
                 }
                 catch (MySqlException ex)
@@ -317,19 +379,82 @@ namespace PuntuApp.Helpers
                 }
             }
         }
+
+        public string GetUsernameById(long userId)
+        {
+            string query = "SELECT username FROM Usuarios WHERE idUsuario = @userId";
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@userId", userId);
+                        object result = cmd.ExecuteScalar();
+                        if (result != null)
+                        {
+                            return result.ToString();
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show("Error al obtener el nombre de usuario: " + ex.Message);
+                    return null;
+                }
+            }
+        }
+
+        public bool DeleteMySQLUser(string username)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Comando para eliminar el usuario MySQL
+                    string dropUserQuery = $"DROP USER '{username}'@'localhost';";
+                    using (MySqlCommand dropUserCommand = new MySqlCommand(dropUserQuery, connection))
+                    {
+                        dropUserCommand.ExecuteNonQuery();
+                    }
+
+                    // Aplicar cambios
+                    using (MySqlCommand flushPrivilegesCommand = new MySqlCommand("FLUSH PRIVILEGES;", connection))
+                    {
+                        flushPrivilegesCommand.ExecuteNonQuery();
+                    }
+                }
+
+                return true;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Error al eliminar el usuario MySQL: " + ex.Message);
+                return false;
+            }
+        }
+
         public DataTable GetUsersWithAttendance()
         {
             string query = @"
-        SELECT 
-            Usuarios.idUsuario AS ID,
-            Usuarios.nombre AS name,
-            Usuarios.username AS Username,
-            MAX(Registros.horaEntrada) AS lastEntry,
-            MAX(Registros.horaSalida) AS lastExit
-        FROM Usuarios
-        LEFT JOIN Registros ON Usuarios.idUsuario = Registros.idUsuario
-        GROUP BY Usuarios.idUsuario, Usuarios.nombre, Usuarios.username
-        ORDER BY Usuarios.idUsuario";
+                SELECT 
+                    Usuarios.idUsuario AS ID,
+                    Usuarios.nombre AS name,
+                    Usuarios.username AS Username,
+                    MAX(Registros.horaEntrada) AS lastEntry,
+                    MAX(Registros.horaSalida) AS lastExit
+                FROM Usuarios
+                LEFT JOIN Registros ON Usuarios.idUsuario = Registros.idUsuario
+                GROUP BY Usuarios.idUsuario, Usuarios.nombre, Usuarios.username
+                ORDER BY Usuarios.idUsuario";
 
             DataTable dataTable = new DataTable();
 

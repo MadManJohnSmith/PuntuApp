@@ -32,8 +32,8 @@ namespace PuntuApp.UserControls
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string filePath = openFileDialog.FileName;
-                    pbPhoto.BackgroundImage = Image.FromFile(filePath);
-                    pbPhoto.BackgroundImageLayout = ImageLayout.Zoom;
+                    pbPhoto.Image = Image.FromFile(filePath);
+                    pbPhoto.SizeMode = PictureBoxSizeMode.Zoom;
                 }
             }
         }
@@ -129,11 +129,11 @@ namespace PuntuApp.UserControls
         }
         private byte[] GetPhotoBytes()
         {
-            if (pbPhoto.BackgroundImage == null) return null;
+            if(pbPhoto.Image == null) return null;
 
             using (var ms = new System.IO.MemoryStream())
             {
-                pbPhoto.BackgroundImage.Save(ms, pbPhoto.BackgroundImage.RawFormat);
+                pbPhoto.Image.Save(ms, pbPhoto.Image.RawFormat);
                 return ms.ToArray();
             }
         }

@@ -113,7 +113,7 @@ namespace PuntuApp.UserControls
         }
         private void btnAddUser_Click(object sender, EventArgs e)
         {
-            var editPage = navigationControl.GetControl<editUserPage>(3);
+            var editPage = navigationControl.GetControl<editUserPage>(4);
             editPage.ClearForm();
             navigationControl.Display(3);
         }
