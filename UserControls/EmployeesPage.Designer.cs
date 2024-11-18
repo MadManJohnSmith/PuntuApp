@@ -122,6 +122,7 @@
             searchBar.PlaceholderText = "Buscar: ";
             searchBar.Size = new Size(194, 35);
             searchBar.TabIndex = 0;
+            searchBar.TextChanged += searchBar_TextChanged;
             // 
             // tableLayoutPanel6
             // 

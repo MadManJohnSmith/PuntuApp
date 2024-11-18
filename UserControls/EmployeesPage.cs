@@ -18,6 +18,7 @@ namespace PuntuApp.UserControls
         Color btnSelectedtColor = Color.FromArgb(203, 220, 235);
         private NavigationControl navigationControl;
         private DatabaseHelper databaseHelper;
+        private DataTable employeesData;
         public EmployeesPage(NavigationControl navigationControl, string connectionString)
         {
             InitializeComponent();
@@ -30,6 +31,7 @@ namespace PuntuApp.UserControls
             btnEstado.Click += (s, e) => OrdenarColumna("Username");
             btnEntrada.Click += (s, e) => OrdenarColumna("lastEntry");
             btnSalida.Click += (s, e) => OrdenarColumna("lastExit");
+            searchBar.TextChanged += searchBar_TextChanged;
             //AddTestRowsToDataGridView();
         }
         private void OrdenarColumna(string columnName)
@@ -153,7 +155,7 @@ namespace PuntuApp.UserControls
             try
             {
                 // Obtener datos de empleados desde la base de datos
-                DataTable employeesData = databaseHelper.GetUsersWithAttendance();
+                employeesData = databaseHelper.GetUsersWithAttendance();
 
                 // Agregar la columna "Estado" calculada al DataTable
                 employeesData.Columns.Add("Estado", typeof(string));
@@ -190,6 +192,21 @@ namespace PuntuApp.UserControls
                 MessageBox.Show("Error al cargar los empleados: " + ex.Message);
             }
         }
+        private void searchBar_TextChanged(object sender, EventArgs e)
+        {
+            if (employeesData != null)
+            {
+                string filterExpression = string.Format(
+                    "Convert(ID, 'System.String') LIKE '%{0}%' OR " +
+                    "name LIKE '%{0}%' OR " +
+                    "Username LIKE '%{0}%' OR " +
+                    "Estado LIKE '%{0}%'",
+                    searchBar.Text);
 
+                DataView dv = new DataView(employeesData);
+                dv.RowFilter = filterExpression;
+                dataGridView1.DataSource = dv;
+            }
+        }
     }
 }
