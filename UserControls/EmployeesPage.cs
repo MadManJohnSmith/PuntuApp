@@ -35,6 +35,18 @@ namespace PuntuApp.UserControls
             //AddTestRowsToDataGridView();
             FilterSelection.SelectedIndexChanged += FilterSelection_SelectedIndexChanged;
             txtFilter.TextChanged += txtFilter_TextChanged;
+            dataGridView1.CellDoubleClick += DataGridView1_CellDoubleClick;
+        }
+        private void DataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+                int userId = Convert.ToInt32(row.Cells["ID"].Value);
+                var editPage = navigationControl.GetControl<editUserPage>(4);
+                editPage.SetUserData(userId);
+                navigationControl.Display(4);
+            }
         }
         private void OrdenarColumna(string columnName)
         {
@@ -101,6 +113,8 @@ namespace PuntuApp.UserControls
         }
         private void btnAddUser_Click(object sender, EventArgs e)
         {
+            var editPage = navigationControl.GetControl<editUserPage>(3);
+            editPage.ClearForm();
             navigationControl.Display(3);
         }
         private void AddTestRowsToDataGridView()

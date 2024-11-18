@@ -415,8 +415,8 @@
             // btnCancelar
             // 
             btnCancelar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnCancelar.BackColor = Color.FromArgb(255, 41, 41);
-            btnCancelar.FlatStyle = FlatStyle.Flat;
+            btnCancelar.BackColor = Color.White;
+            btnCancelar.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnCancelar.Location = new Point(563, 94);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(123, 41);

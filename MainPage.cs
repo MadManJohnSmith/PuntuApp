@@ -42,7 +42,8 @@ namespace PuntuApp
                 new HomePage(),//0
                 new EmployeesPage(navigationControl, connectionString),//1
                 new UserPage(),//2
-                new addUserPage(navigationControl, connectionString)//3
+                new addUserPage(navigationControl, connectionString),//3
+                new editUserPage(navigationControl, connectionString)//4
             };
 
 
