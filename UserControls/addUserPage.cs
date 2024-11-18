@@ -39,6 +39,7 @@ namespace PuntuApp.UserControls
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
+            // Limpiar el formulario
             txtName.Clear();
             txtPaterno.Clear();
             txtMaterno.Clear();
@@ -46,11 +47,14 @@ namespace PuntuApp.UserControls
             txtPassword.Clear();
             txtPassVeri.Clear();
             cbUserType.SelectedIndex = 0;
-            pbPhoto.BackgroundImage = null;
-
             pbPhoto.BackgroundImage = Properties.Resources.account_circle_24dp_133E87_FILL0_wght400_GRAD0_opsz24;
 
+            // Regresar a la página de empleados
             navigationControl.Display(1);
+
+            // Actualizar la tabla de empleados
+            var employeesPage = navigationControl.GetControl<EmployeesPage>(1);
+            employeesPage.LoadEmployees();
         }
         private void btnAddUser_Click(object sender, EventArgs e)
         {
@@ -77,14 +81,12 @@ namespace PuntuApp.UserControls
             string username = txtUsername.Text;
             string password = txtPassword.Text;
             string roleName = cbUserType.SelectedItem?.ToString();
-            byte[] photo = GetPhotoBytes(); // Obtener la foto como byte[]
+            byte[] photo = GetPhotoBytes();
 
             try
             {
-                // Crear una instancia de DatabaseHelper
+                // Crear usuario en base de datos
                 DatabaseHelper dbHelper = new DatabaseHelper(connectionString);
-
-                // Agregar usuario
                 long userId = dbHelper.AddUser(fullName, username, password, photo);
                 if (userId == -1)
                 {
@@ -92,7 +94,7 @@ namespace PuntuApp.UserControls
                     return;
                 }
 
-                // Obtener ID del rol
+                // Obtener ID del rol y asignar al usuario
                 long roleId = dbHelper.GetRoleId(roleName);
                 if (roleId == -1)
                 {
@@ -100,7 +102,6 @@ namespace PuntuApp.UserControls
                     return;
                 }
 
-                // Asignar el rol al usuario
                 bool roleAssigned = dbHelper.AssignRoleToUser(userId, roleId);
                 if (!roleAssigned)
                 {
@@ -108,8 +109,18 @@ namespace PuntuApp.UserControls
                     return;
                 }
 
+                // Crear usuario MySQL con privilegios según el rol
+                bool mysqlUserCreated = dbHelper.CreateMySQLUser(username, password, roleName);
+                if (!mysqlUserCreated)
+                {
+                    MessageBox.Show("Error al crear el usuario MySQL.");
+                    return;
+                }
+
                 MessageBox.Show("Usuario agregado correctamente.");
-                btnCancelar_Click(sender, e); // Limpiar el formulario y regresar a la página anterior
+
+                // Actualizar la tabla de empleados
+                btnCancelar_Click(sender, e);
             }
             catch (Exception ex)
             {

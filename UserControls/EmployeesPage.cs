@@ -118,7 +118,7 @@ namespace PuntuApp.UserControls
                 MessageBox.Show("Error al añadir filas de prueba: " + ex.Message);
             }
         }
-        private void LoadEmployees()
+        public void LoadEmployees()
         {
             try
             {

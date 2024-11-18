@@ -105,6 +105,52 @@ namespace PuntuApp.Helpers
                 }
             }
         }
+        public bool CreateMySQLUser(string username, string password, string role)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Crear el usuario MySQL
+                    string createUserQuery = $"CREATE USER '{username}'@'%' IDENTIFIED BY '{password}';";
+                    using (MySqlCommand createUserCommand = new MySqlCommand(createUserQuery, connection))
+                    {
+                        createUserCommand.ExecuteNonQuery();
+                    }
+
+                    // Asignar privilegios según el rol
+                    string grantPrivilegesQuery;
+                    if (role == "Administrador")
+                    {
+                        grantPrivilegesQuery = $"GRANT ALL PRIVILEGES ON PuntuApp.* TO '{username}'@'%';";
+                    }
+                    else // Empleado
+                    {
+                        grantPrivilegesQuery = $"GRANT SELECT, UPDATE ON PuntuApp.Usuarios TO '{username}'@'%';";
+                    }
+
+                    using (MySqlCommand grantPrivilegesCommand = new MySqlCommand(grantPrivilegesQuery, connection))
+                    {
+                        grantPrivilegesCommand.ExecuteNonQuery();
+                    }
+
+                    // Aplicar cambios
+                    using (MySqlCommand flushPrivilegesCommand = new MySqlCommand("FLUSH PRIVILEGES;", connection))
+                    {
+                        flushPrivilegesCommand.ExecuteNonQuery();
+                    }
+                }
+
+                return true;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Error al crear el usuario MySQL: " + ex.Message);
+                return false;
+            }
+        }
         //Devuelve una lista de empleados con información básica
         public DataTable GetUsers()
         {

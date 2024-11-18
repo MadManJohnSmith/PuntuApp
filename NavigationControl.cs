@@ -49,6 +49,13 @@ namespace PuntuApp
             userControlList[index].Visible = true;
             userControlList[index].BringToFront();
         }
-
+        public T GetControl<T>(int index) where T : UserControl
+        {
+            if (index >= 0 && index < userControlList.Count && userControlList[index] is T control)
+            {
+                return control;
+            }
+            return null;
+        }
     }
 }
